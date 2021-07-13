@@ -6,6 +6,7 @@
   <title>TaskList</title>
   <link rel="stylesheet" href="./normalize.css">
   <link rel="stylesheet" href="./style.css">
+  <link rel="stylesheet" href="./renderedmarkdown.css">
 </head>
 
 <body>
@@ -13,23 +14,27 @@
     <h1>TaskList</h1>
 
     <form id="create-task-form" action="#" method="POST">
-      <label for="new-task-title">Task title:</label>
-      <input type="text" id="new-task-title" name="new-task-title" required>
+      <label for="new-task-title">Task title:
+        <input type="text" id="new-task-title" name="new-task-title" required>
+      </label>
 
-      <label for="new-task-description">Task description:</label>
-      <textarea id="new-task-description" name="new-task-description"></textarea>
+      <label for="new-task-priority">Priority:
+        <select name="new-task-priority" id="new-task-priority" required>
+          <option value="highest">Highest</option>
+          <option value="high">High</option>
+          <option value="medium" selected>Medium</option>
+          <option value="low">Low</option>
+          <option value="lowest">Lowest</option>
+        </select>
+      </label>
 
-      <label for="new-task-priority">Priority:</label>
-      <select name="new-task-priority" id="new-task-priority" required>
-        <option value="highest">Highest</option>
-        <option value="high">High</option>
-        <option value="medium" selected>Medium</option>
-        <option value="low">Low</option>
-        <option value="lowest">Lowest</option>
-      </select>
+      <label for="new-task-date">Due Date:
+        <input type="date" id="new-task-date" name="new-task-date"></input>
+      </label>
 
-      <label for="new-task-date">Due Date:</label>
-      <input type="date" id="new-task-date" name="new-task-date"></input>
+      <label for="new-task-description">Task description:
+        <textarea id="new-task-description" name="new-task-description" class="description_edit"></textarea>
+      </label>
 
       <input type="submit" value="Create New Task">
     </form>

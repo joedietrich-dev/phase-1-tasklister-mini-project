@@ -1,7 +1,10 @@
+@import url('https://fonts.googleapis.com/css2?family=Fira+Code:wght@300&family=Fira+Sans:wght@300;400;500&display=swap');
+
 html {
   /* height: 100%;
-  width: 100%;
-  font-family: "Titillium Web", sans-serif; */
+  width: 100%; */
+  font-family: 'Fira Sans', sans-serif;
+  font-weight: 300;
 }
 
 body {
@@ -10,11 +13,10 @@ body {
   background: linear-gradient(pink, violet); */
 }
 
-button {
-  /* font-size: 7px; */
-}
-
 #main-content {
+  width: 40rem;
+  max-width: 95%;
+  margin: 0 auto;
   /* position: relative;
   display: flex;
   justify-content: center;
@@ -25,6 +27,87 @@ button {
   padding: 15px 20px 18px 18px;
   border-radius: 5px;
   box-shadow: 2px 5px 5px #333; */
+}
+
+#main-content h1 {
+  text-align: center;
+}
+
+form#create-task-form {
+  display: flex;
+  flex-flow: row wrap;
+}
+form#create-task-form label{
+  display: flex;
+  flex-direction: column;
+  flex: 1 100%;
+  font-weight: 500;
+  padding-bottom: 1rem;
+}
+form#create-task-form label[for='new-task-priority'],
+form#create-task-form label[for='new-task-date'] {
+  flex: 1 45%;
+}
+form#create-task-form label[for='new-task-priority'] {
+  padding-right: .5rem;
+}
+form#create-task-form label[for='new-task-date'] {
+  padding-left: .5rem;
+}
+form#create-task-form label > select,
+form#create-task-form label > textarea,
+form#create-task-form label > input {
+  display: block;
+  box-sizing: border-box;
+  font-size: 100%;
+  margin: 0;
+  padding: 0.25rem;
+}
+form#create-task-form label > select,
+form#create-task-form label > input {
+  height: 2rem;
+}
+form#create-task-form label > textarea {
+  height: 5.25rem;
+}
+
+textarea.description_edit {
+  font-family: 'Fira Code', monospace;
+}
+
+select, input, textarea {
+  font-weight: 300;
+}
+form#create-task-form input[type='submit'] {
+  flex: 1 100%;
+  padding: .33rem;
+}
+
+ul#tasks{
+  padding: 0;
+  margin: 0;
+}
+li.to-do {
+  display: block;
+}
+
+li.to-do .to-do-title {
+  width: 100%;
+  display: grid;
+  grid-template-columns: auto 8rem 1fr 9rem auto auto;
+  height: 2rem;
+}
+li.to-do .to-do-title > div {
+  padding: 0.45rem .3rem;
+}
+li.to-do .to-do-title > img {
+  align-self: center;
+}
+li.to-do .to-do-description {
+  width: 100%;
+  margin-left: 1.25rem;
+  padding-left: 0.3rem;
+  background-color: rgb(245, 245, 245);
 }
 
 #list {

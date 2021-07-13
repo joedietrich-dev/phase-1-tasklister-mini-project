@@ -1,6 +1,7 @@
 // TO DO: Ordering by due date and priority (and back to date created)
 // TO DO: (upload / download?)
 // TO DO: Drag and drop manual ordering? Nah.
+// TO DO: Styling
 
 let toDoItems = retrieveItems();
 const ORDINAL_PRIORITY = [
@@ -24,11 +25,12 @@ function renderToDo(dataset) {
   const renderedDueDate = renderDate(dueDate);
   const item = elAdder('li', null, { classes: ['to-do', 'expanded'], dataset: dataset });
   const toDoTitleArea = elAdder('div', item, { classes: ['to-do-title'] });
+  const toDoMove = elAdder('img', toDoTitleArea, { src: './img/dots-vertical.svg', height: 20, width: 20, alt: `move ${title}`, dataset: { toDoId: id }, classes: ['move-icon'] })
   const toDoPriority = elAdder('div', toDoTitleArea, { text: capitalize(priority), classes: ['to-do-title__priority', `priority_${priority}`] });
   const toDoTitle = elAdder('div', toDoTitleArea, { text: title, classes: ['to-do-title__title'] });
   const toDoDate = elAdder('div', toDoTitleArea, { text: renderedDueDate, classes: ['to-do-title__date'] });
-  const toDoDelete = elAdder('img', toDoTitleArea, { src: './img/trash.svg', height: 20, width: 20, alt: `delete ${title}`, dataset: { toDoId: id } })
-  const toDoEdit = elAdder('img', toDoTitleArea, { src: './img/edit.svg', height: 20, width: 20, alt: `edit ${title}`, dataset: { toDoId: id } })
+  const toDoDelete = elAdder('img', toDoTitleArea, { src: './img/trash.svg', height: 20, width: 20, alt: `delete ${title}`, dataset: { toDoId: id }, classes: ['delete-icon'] })
+  const toDoEdit = elAdder('img', toDoTitleArea, { src: './img/edit.svg', height: 20, width: 20, alt: `edit ${title}`, dataset: { toDoId: id }, classes: ['edit-icon'] })
   const toDoDescriptionArea = elAdder('div', item, { innerHTML: renderedDescription, classes: ['to-do-description'] });
 
   toDoDelete.addEventListener('click', handleDeleteToDo);
@@ -41,11 +43,12 @@ function renderEditToDo(dataset) {
   const { title, dueDate, description, priority, id } = dataset;
   const item = elAdder('li', null, { classes: ['to-do', 'expanded', 'to-do-edit'], dataset: dataset });
   const toDoTitleArea = elAdder('div', item, { classes: ['to-do-title'] });
+  const toDoMove = elAdder('img', toDoTitleArea, { src: './img/dots-vertical.svg', height: 20, width: 20, alt: `move ${title}`, dataset: { toDoId: id }, classes: ['icon', 'move-icon'] })
   const toDoPriority = elAdder('select', toDoTitleArea, { id: `priority-${id}`, classes: ['to-do-title__priority', `priority_edit`], selectOptions: ORDINAL_PRIORITY, selectedDefault: priority });
   const toDoTitle = elAdder('input', toDoTitleArea, { id: `title-${id}`, type: 'text', value: title, classes: ['to-do-title__title', 'title_edit'], required: true });
   const toDoDate = elAdder('input', toDoTitleArea, { id: `date-${id}`, type: 'date', value: dueDate, classes: ['to-do-title__date', 'date_edit'] });
-  const toDoSave = elAdder('img', toDoTitleArea, { src: './img/save.svg', height: 20, width: 20, alt: `save ${title}`, dataset: { toDoId: id } })
-  const toDoCancelEdit = elAdder('img', toDoTitleArea, { src: './img/close.svg', height: 20, width: 20, alt: `cancel editing ${title}`, dataset: { toDoId: id } })
+  const toDoSave = elAdder('img', toDoTitleArea, { src: './img/save.svg', height: 20, width: 20, alt: `save ${title}`, dataset: { toDoId: id }, classes: ['icon', 'save-icon'] })
+  const toDoCancelEdit = elAdder('img', toDoTitleArea, { src: './img/close.svg', height: 20, width: 20, alt: `cancel editing ${title}`, dataset: { toDoId: id }, classes: ['icon', 'cancel-icon'] })
   const toDoDescriptionArea = elAdder('textarea', item, { id: `description-${id}`, value: description, classes: ['to-do-description', 'description_edit'] });
 
   toDoCancelEdit.addEventListener('click', handleCancelEdit);
