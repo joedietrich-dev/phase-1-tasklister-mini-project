@@ -1,7 +1,6 @@
 // TO DO: Ordering by due date and priority (and back to date created)
 // TO DO: (upload / download?)
 // TO DO: Drag and drop manual ordering? Nah.
-// TO DO: Styling
 
 let toDoItems = retrieveItems();
 const ORDINAL_PRIORITY = [
@@ -11,6 +10,14 @@ const ORDINAL_PRIORITY = [
   'low',
   'lowest'
 ]
+const PRIORITY_COLOR = {
+  lowest: "hsl(80, 0%, 90%)",
+  low: "hsl(60, 25%, 90%)",
+  medium: "hsl(40, 50%, 90%)",
+  high: "hsl(20, 75%, 90%)",
+  highest: "hsl(0, 100%, 90%)",
+
+}
 
 document.addEventListener("DOMContentLoaded", () => {
   newTaskForm = document.querySelector('#create-task-form');
@@ -31,7 +38,9 @@ function renderToDo(dataset) {
   const toDoDate = elAdder('div', toDoTitleArea, { text: renderedDueDate, classes: ['to-do-title__date'] });
   const toDoDelete = elAdder('img', toDoTitleArea, { src: './img/trash.svg', height: 20, width: 20, alt: `delete ${title}`, dataset: { toDoId: id }, classes: ['delete-icon'] })
   const toDoEdit = elAdder('img', toDoTitleArea, { src: './img/edit.svg', height: 20, width: 20, alt: `edit ${title}`, dataset: { toDoId: id }, classes: ['edit-icon'] })
-  const toDoDescriptionArea = elAdder('div', item, { innerHTML: renderedDescription, classes: ['to-do-description'] });
+  const toDoDescriptionArea = elAdder('div', item, { innerHTML: renderedDescription, classes: ['to-do-description', 'description-markdown'] });
+
+  item.style.setProperty('--color-priority', PRIORITY_COLOR[priority]);
 
   toDoDelete.addEventListener('click', handleDeleteToDo);
   toDoEdit.addEventListener('click', handleEditToDo);
@@ -51,8 +60,13 @@ function renderEditToDo(dataset) {
   const toDoCancelEdit = elAdder('img', toDoTitleArea, { src: './img/close.svg', height: 20, width: 20, alt: `cancel editing ${title}`, dataset: { toDoId: id }, classes: ['icon', 'cancel-icon'] })
   const toDoDescriptionArea = elAdder('textarea', item, { id: `description-${id}`, value: description, classes: ['to-do-description', 'description_edit'] });
 
+  item.style.setProperty('--color-priority', PRIORITY_COLOR[priority]);
   toDoCancelEdit.addEventListener('click', handleCancelEdit);
   toDoSave.addEventListener('click', handleSaveToDo);
+  toDoDescriptionArea.addEventListener('keydown', handleTextareaKeydown);
+  toDoPriority.addEventListener('change', (e) => { item.style.setProperty('--color-priority', PRIORITY_COLOR[e.target.value]); console.log(e) })
+
+  setTextareaHeight(toDoDescriptionArea);
 
   return item;
 }
@@ -83,7 +97,8 @@ function handleAddToDo(e) {
   const newTaskPriority = document.querySelector('[name=new-task-priority]').value;
   const newTaskDueDate = document.querySelector('[name=new-task-date]').value;
 
-  constructToDo(newTaskTitle, newTaskDescription, newTaskPriority, newTaskDueDate)
+  constructToDo(newTaskTitle, newTaskDescription, newTaskPriority, newTaskDueDate);
+  e.target.reset();
 }
 
 function constructToDo(title, description, priority, dueDate) {
@@ -156,9 +171,11 @@ function handleDeleteToDo(e) {
   const deletedItemID = parseInt(e.target.dataset.toDoId);
   const deletedItem = getToDoFromId(deletedItemID);
 
-  toDoItems = toDoItems.filter(item => item.id !== deletedItemID);
-  storeItems(toDoItems);
-  deletedItem.remove();
+  if (window.confirm("Are you sure you want to delete this item?")) {
+    toDoItems = toDoItems.filter(item => item.id !== deletedItemID);
+    storeItems(toDoItems);
+    deletedItem.remove();
+  }
 }
 
 // Helpers
@@ -210,7 +227,7 @@ function elAdder(type, parent, options = {}) {
 }
 
 function renderFromMarkdown(markdown) {
-  return marked(markdown);
+  return marked(markdown, { gfm: true, breaks: true });
 }
 
 function cleanHtmlInput(htmlInput) {
@@ -223,9 +240,20 @@ function capitalize(text) {
 
 function renderDate(dateText) {
   const date = new Date(dateText);
-  return `${date.getUTCMonth() + 1}/${date.getUTCDate()}/${date.getUTCFullYear()}`;
+  return Number.isNaN(date.getDate()) ? '' : `${date.getUTCMonth() + 1}/${date.getUTCDate()}/${date.getUTCFullYear()}`;
 }
 
 function getToDoFromId(id) {
   return document.querySelector(`[data-id='${id}']`);
+}
+
+function setTextareaHeight(textarea) {
+  const fieldText = textarea.value || "";
+  const rows = fieldText.match(/\n/g)?.length || 0;
+  textarea.rows = rows < 2 ? 2 : rows;
+}
+
+function handleTextareaKeydown(e) {
+  const field = e.target;
+  setTextareaHeight(field);
 }

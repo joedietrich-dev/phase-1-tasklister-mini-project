@@ -1,35 +1,17 @@
 @import url('https://fonts.googleapis.com/css2?family=Fira+Code:wght@300&family=Fira+Sans:wght@300;400;500&display=swap');
 
 html {
-  /* height: 100%;
-  width: 100%; */
   font-family: 'Fira Sans', sans-serif;
   font-weight: 300;
-}
-
-body {
-  /* min-height: 100%;
-  min-width: 100%;
-  background: linear-gradient(pink, violet); */
 }
 
 #main-content {
   width: 40rem;
   max-width: 95%;
   margin: 0 auto;
-  /* position: relative;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  flex-direction: column;
-  border: 1px solid #333;
-  background: rgba(255, 255, 255, 0.3);
-  padding: 15px 20px 18px 18px;
-  border-radius: 5px;
-  box-shadow: 2px 5px 5px #333; */
 }
 
-#main-content h1 {
+h1 {
   text-align: center;
 }
 
@@ -53,6 +35,14 @@ form#create-task-form label[for='new-task-priority'] {
 }
 form#create-task-form label[for='new-task-date'] {
   padding-left: .5rem;
+}
+@media screen and (max-width: 364px) {
+  form#create-task-form label[for='new-task-priority'],
+  form#create-task-form label[for='new-task-date'] {
+    padding-right: 0;
+    padding-left: 0;
+    flex: 1 100%;
+  }
 }
 form#create-task-form label > select,
 form#create-task-form label > textarea,
@@ -88,15 +78,52 @@ ul#tasks{
   margin: 0;
 }
 li.to-do {
-  display: block;
+  display: flex;
+  flex-direction: column;
+  margin-bottom: 1rem;
+  background-color: var(--color-priority, lightgray);
 }
 
 li.to-do .to-do-title {
   width: 100%;
   display: grid;
-  grid-template-columns: auto 8rem 1fr 9rem auto auto;
+  grid: "grab priority title date left-icon right-icon"
+        / auto 8rem 1fr 9rem auto auto;
   height: 2rem;
 }
+
+@media screen and (max-width: 720px) {
+  li.to-do .to-do-title {
+    height: auto;
+    grid: "grab title     title     title left-icon right-icon" auto
+          ".    priority  priority  date  date      date" 2rem
+          / auto 1fr auto auto auto auto;
+  }
+}
+.to-do-title .move-icon {
+  grid-area: grab;
+}
+.to-do-title__priority {
+  grid-area: priority;
+  border: none;
+}
+.to-do-title__title {
+  border: none;
+  grid-area: title;
+}
+.to-do-title .save-icon,
+.to-do-title .delete-icon {
+  grid-area: left-icon;
+}
+.to-do-title .cancel-icon,
+.to-do-title .edit-icon {
+  grid-area: right-icon;
+}
+.to-do-title__date {
+  border: none;
+  grid-area: date;
+}
+
 li.to-do .to-do-title > div {
   padding: 0.45rem .3rem;
 }
@@ -104,17 +131,8 @@ li.to-do .to-do-title > img {
   align-self: center;
 }
 li.to-do .to-do-description {
-  width: 100%;
   margin-left: 1.25rem;
-  padding-left: 0.3rem;
+  padding: 0.3rem;
   background-color: rgb(245, 245, 245);
-}
-
-#list {
-  /* margin: 10px;
-  border: 1px solid #333;
-  background: rgba(255, 255, 255, 0.75);
-  padding: 15px 20px 18px 18px;
-  border-radius: 5px;
-  box-shadow: 2px 5px 5px #333; */
+  border: none;
 }
