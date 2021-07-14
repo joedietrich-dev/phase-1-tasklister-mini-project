@@ -3,6 +3,7 @@
 html {
   font-family: 'Fira Sans', sans-serif;
   font-weight: 300;
+  --background-color: hsl(0, 0%, 98%);
 }
 
 #main-content {
@@ -18,6 +19,8 @@ h1 {
 form#create-task-form {
   display: flex;
   flex-flow: row wrap;
+  padding: 0.5rem;
+  background-color: var(--background-color);
 }
 form#create-task-form label{
   display: flex;
@@ -110,6 +113,9 @@ li.to-do .to-do-title {
 .to-do-title__title {
   border: none;
   grid-area: title;
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
 }
 .to-do-title .save-icon,
 .to-do-title .delete-icon {
@@ -133,6 +139,13 @@ li.to-do .to-do-title > img {
 li.to-do .to-do-description {
   margin-left: 1.25rem;
   padding: 0.3rem;
-  background-color: rgb(245, 245, 245);
+  background-color: var(--background-color);
   border: none;
+}
+
+form#create-task-form,
+li.to-do {
+  box-shadow: rgba(50, 50, 93, 0.25) 0px 2px 5px -1px, rgba(0, 0, 0, 0.3) 0px 1px 3px -1px;
+  /* box-shadow: rgba(0, 0, 0, 0.15) 2.4px 2.4px 3.2px; */
+  /* box-shadow: rgba(0, 0, 0, 0.45) 0px 25px 20px -20px; */
 }

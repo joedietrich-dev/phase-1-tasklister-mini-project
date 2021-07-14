@@ -1,6 +1,6 @@
 // TO DO: Ordering by due date and priority (and back to date created)
 // TO DO: (upload / download?)
-// TO DO: Drag and drop manual ordering? Nah.
+// TO DO: Drag and drop manual ordering
 
 let toDoItems = retrieveItems();
 const ORDINAL_PRIORITY = [
