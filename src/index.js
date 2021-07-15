@@ -20,8 +20,14 @@ const PRIORITY_COLOR = {
 }
 
 document.addEventListener("DOMContentLoaded", () => {
-  newTaskForm = document.querySelector('#create-task-form');
+  const newTaskForm = document.querySelector('#create-task-form');
   newTaskForm.addEventListener('submit', handleAddToDo);
+
+  const sortButtons = document.querySelectorAll('button.sort-button');
+  sortButtons.forEach(button => {
+    button.addEventListener('click', handleSort);
+  })
+
   reRenderAllItems(toDoItems);
 });
 
@@ -176,6 +182,62 @@ function handleDeleteToDo(e) {
     storeItems(toDoItems);
     deletedItem.remove();
   }
+}
+
+// Sort
+function handleSort(e) {
+  const sortButton = e.target;
+  const sortButtons = document.querySelectorAll('button.sort-button');
+
+  sortButtons.forEach(button => {
+    if (button === sortButton) {
+      button.classList.add('active');
+      if (button.classList.contains('ascending')) {
+        button.classList.remove('ascending');
+        button.classList.add('descending');
+      } else {
+        button.classList.remove('descending');
+        button.classList.add('ascending');
+      }
+    } else {
+      button.classList.remove('active', 'ascending', 'descending');
+    }
+  })
+
+  const newToDoList = [...toDoItems];
+  const sortType = sortButton.dataset.sortType;
+  let sortFunction = Function.prototype;
+
+  switch (sortType) {
+    case "priority":
+      newToDoList.sort((a, b) => {
+        return ORDINAL_PRIORITY.indexOf(a.priority) - ORDINAL_PRIORITY.indexOf(b.priority)
+      })
+      break;
+    case "due-date":
+      newToDoList.sort((a, b) => {
+        return new Date(a.dueDate) - new Date(b.dueDate)
+      })
+      break;
+    case "date-created":
+      newToDoList.sort((a, b) => {
+        return a.id - b.id;
+      })
+      break;
+    case "manual-order":
+      newToDoList.sort((a, b) => {
+        return a.order - b.order
+      })
+      break;
+    default:
+      break;
+  }
+
+  toDoItems = sortButton.classList.contains('descending') ? newToDoList : newToDoList.reverse();
+  storeItems(toDoItems);
+  reRenderAllItems(toDoItems);
+
+  console.log(toDoItems)
 }
 
 // Helpers
