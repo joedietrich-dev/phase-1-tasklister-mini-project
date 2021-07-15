@@ -43,12 +43,22 @@
 
     <div id="list">
       <h2>My To-Do List</h2>
+      <div class="list-sorter-control">
+        Sort by:
+        <div class="list-sorter-buttons">
+          <button class="sort-button" data-sort-type="priority" id="sort-priority">Priority</button>
+          <button class="sort-button" data-sort-type="due-date" id="sort-due-date">Due Date</button>
+          <button class="sort-button" data-sort-type="date-created" id="sort-date-created">Date Created</button>
+          <!-- <button class="sort-button" data-sort-type="manual-order" id="sort-manual-order">Manual Ordering</button> -->
+        </div>
+      </div>
       <ul id="tasks">
       </ul>
     </div>
 
     <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/dompurify/dist/purify.min.js"></script>
+    <!-- <script src="/src/lib/papaparse.min.js"></script> -->
     <script src="./src/index.js"></script>
   </div>
 

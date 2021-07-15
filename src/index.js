@@ -1,4 +1,3 @@
-// TO DO: Ordering by due date and priority (and back to date created)
 // TO DO: (upload / download?)
 // TO DO: Drag and drop manual ordering
 
@@ -29,6 +28,8 @@ document.addEventListener("DOMContentLoaded", () => {
   })
 
   reRenderAllItems(toDoItems);
+  // const csv = Papa.unparse(toDoItems)
+  // console.log(csv)
 });
 
 // Render
@@ -50,6 +51,10 @@ function renderToDo(dataset) {
 
   toDoDelete.addEventListener('click', handleDeleteToDo);
   toDoEdit.addEventListener('click', handleEditToDo);
+  toDoMove.addEventListener('mousedown', handleMoveMousedown);
+  toDoMove.addEventListener('mouseup', handleMoveMouseup);
+  item.addEventListener('dragstart', handleDragStart, false);
+  item.addEventListener('dragend', handleDragEnd, false);
 
   return item;
 }
@@ -238,6 +243,22 @@ function handleSort(e) {
   reRenderAllItems(toDoItems);
 
   console.log(toDoItems)
+}
+
+function handleMoveMousedown(e) {
+  // const item = getToDoFromId(e.target.dataset.toDoId);
+  // console.log(item)
+  // item.draggable = true;
+}
+function handleMoveMouseup(e) {
+  // const item = getToDoFromId(e.target.dataset.toDoId);
+  // item.draggable = false;
+}
+function handleDragStart(e) {
+  // TO DO
+}
+function handleDragEnd(e) {
+  // TO DO
 }
 
 // Helpers

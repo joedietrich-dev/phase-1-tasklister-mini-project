@@ -76,6 +76,51 @@ form#create-task-form input[type='submit'] {
   padding: .33rem;
 }
 
+
+/* Sorting Controls */
+.list-sorter-control {
+  margin-bottom: 1rem;
+}
+.list-sorter-buttons {
+  display: inline-flex;
+  flex-flow: row nowrap;
+  justify-content:left;
+}
+.list-sorter-buttons button {
+  margin-left: 1rem;
+  font-weight: 300;
+  border: none;
+  padding: .25rem .75rem;
+}
+.list-sorter-buttons button.active {
+  background-color: hsl(0, 0%, 45%);
+  color: white;
+}
+.list-sorter-buttons button.active.ascending::after {
+  content: "↑";
+  margin-left: 0.5rem;
+}
+.list-sorter-buttons button.active.descending::after {
+  content: "↓";
+  margin-left: 0.5rem;
+}
+
+@media screen and (max-width: 675px) {
+  .list-sorter-buttons {
+    display: flex;
+    flex-flow: row wrap;
+  }
+  .list-sorter-buttons button {
+    margin: .5rem 1rem 0 0;
+    font-weight: 300;
+  }
+  .list-sorter-buttons button:last-child {
+    margin-right: 0;
+    font-weight: 300;
+  }
+}
+
+
 ul#tasks{
   padding: 0;
   margin: 0;
@@ -95,7 +140,7 @@ li.to-do .to-do-title {
   height: 2rem;
 }
 
-@media screen and (max-width: 720px) {
+@media screen and (max-width: 675px) {
   li.to-do .to-do-title {
     height: auto;
     grid: "grab title     title     title left-icon right-icon" auto
@@ -144,7 +189,8 @@ li.to-do .to-do-description {
 }
 
 form#create-task-form,
-li.to-do {
+li.to-do,
+.list-sorter-buttons button {
   box-shadow: rgba(50, 50, 93, 0.25) 0px 2px 5px -1px, rgba(0, 0, 0, 0.3) 0px 1px 3px -1px;
   /* box-shadow: rgba(0, 0, 0, 0.15) 2.4px 2.4px 3.2px; */
   /* box-shadow: rgba(0, 0, 0, 0.45) 0px 25px 20px -20px; */
