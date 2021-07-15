@@ -51,10 +51,10 @@ function renderToDo(dataset) {
 
   toDoDelete.addEventListener('click', handleDeleteToDo);
   toDoEdit.addEventListener('click', handleEditToDo);
-  toDoMove.addEventListener('mousedown', handleMoveMousedown);
-  toDoMove.addEventListener('mouseup', handleMoveMouseup);
-  item.addEventListener('dragstart', handleDragStart, false);
-  item.addEventListener('dragend', handleDragEnd, false);
+  // toDoMove.addEventListener('mousedown', handleMoveMousedown);
+  // toDoMove.addEventListener('mouseup', handleMoveMouseup);
+  // item.addEventListener('dragstart', handleDragStart, false);
+  // item.addEventListener('dragend', handleDragEnd, false);
 
   return item;
 }
@@ -221,6 +221,9 @@ function handleSort(e) {
       break;
     case "due-date":
       newToDoList.sort((a, b) => {
+        if (a.dueDate === '' && b.dueDate === '') return 0;
+        if (a.dueDate === '') return 1;
+        if (b.dueDate === '') return -1;
         return new Date(a.dueDate) - new Date(b.dueDate)
       })
       break;
