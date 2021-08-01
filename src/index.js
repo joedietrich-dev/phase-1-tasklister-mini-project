@@ -2,6 +2,7 @@
 // TO DO: Drag and drop manual ordering
 
 let toDoItems = retrieveItems();
+
 const ORDINAL_PRIORITY = [
   'highest',
   'high',
@@ -15,7 +16,6 @@ const PRIORITY_COLOR = {
   medium: "hsl(40, 50%, 90%)",
   high: "hsl(20, 75%, 90%)",
   highest: "hsl(0, 100%, 90%)",
-
 }
 
 document.addEventListener("DOMContentLoaded", () => {
